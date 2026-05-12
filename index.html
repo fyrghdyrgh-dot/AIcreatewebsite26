@@ -1,0 +1,1275 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>电商带货增长台｜投放素材·脚本·创意矩阵</title>
+  <meta name="description" content="国内电商带货增长台：投放素材生成、脚本模板、创意矩阵、数据与选品入口一站式导航。支持分类、搜索、收藏、最近使用与推荐；纯前端单页可直接部署。" />
+  <meta property="og:title" content="电商带货增长台" />
+  <meta property="og:description" content="投放素材·脚本·创意矩阵｜支持分类、搜索、收藏、最近使用与模板库。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root{
+      --bg:#070A12;
+      --paper:#0D1222;
+      --paper2:#0A0F1D;
+      --text:rgba(255,255,255,.90);
+      --muted:rgba(255,255,255,.62);
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --shadow2: 0 30px 90px rgba(0,0,0,.72);
+      --radius: 18px;
+      --hot:#22d3ee;
+      --hot2:#a78bfa;
+      --lime:#34d399;
+      --pink:#fb7185;
+      --amber:#fbbf24;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height:1.55;
+      background:
+        radial-gradient(900px 540px at 16% 0%, rgba(34,211,238,.16), transparent 62%),
+        radial-gradient(780px 520px at 92% 8%, rgba(167,139,250,.16), transparent 60%),
+        radial-gradient(820px 520px at 44% 108%, rgba(52,211,153,.12), transparent 60%),
+        linear-gradient(180deg, rgba(7,10,18,1), rgba(9,12,22,1));
+    }
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+    .container{max-width:1240px;margin:0 auto;padding:14px}
+
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,18,.68);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width:1240px;
+      margin:0 auto;
+      padding: 12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;min-width: 280px}
+    .logo{
+      width:38px;height:38px;border-radius:16px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.22), transparent 62%),
+        linear-gradient(135deg, rgba(34,211,238,1), rgba(167,139,250,.95));
+      box-shadow: 0 22px 60px rgba(167,139,250,.22);
+    }
+    .brand-text{display:flex;flex-direction:column;line-height:1.1}
+    .brand-title{font-weight:980;letter-spacing:.2px}
+    .brand-sub{margin-top:2px;color: var(--muted);font-size:12px}
+    .nav{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      justify-content:center;flex:1;min-width:0;
+    }
+    .nav a{
+      font-size:12.5px;
+      color: rgba(255,255,255,.78);
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .nav a:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.26); background: rgba(255,255,255,.10)}
+    .actions{display:flex;align-items:center;gap:10px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.90);
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:13px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(167,139,250,.24); background: rgba(255,255,255,.10)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(34,211,238,1), rgba(167,139,250,.95));
+      border-color: rgba(34,211,238,.30);
+      color:#071018;
+      font-weight: 900;
+    }
+    .btn.ghost{background:transparent}
+
+    .hero{
+      margin-top: 12px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(920px 420px at 14% 10%, rgba(34,211,238,.22), transparent 62%),
+        radial-gradient(820px 380px at 86% 14%, rgba(167,139,250,.18), transparent 60%),
+        radial-gradient(720px 420px at 42% 92%, rgba(52,211,153,.14), transparent 62%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .hero-inner{padding: 14px 14px 16px;max-width: 1080px;margin:0 auto;text-align:center}
+    .hero-title{margin:0;font-size:22px;font-weight:980;letter-spacing:.2px}
+    .hero-sub{margin:8px 0 0;color: rgba(255,255,255,.70);font-size:12.5px;line-height:1.7}
+
+    .searchbar{
+      margin: 12px auto 0;
+      display:flex;align-items:center;gap:10px;
+      width: min(900px, 100%);
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.26);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 22px 70px rgba(0,0,0,.60);
+    }
+    .searchbar svg{opacity:.92;color: rgba(255,255,255,.80)}
+    .searchbar input{
+      flex:1;border:0;outline:0;background:transparent;
+      color: rgba(255,255,255,.92);
+      font-size: 14px;
+    }
+    .searchbar input::placeholder{color: rgba(255,255,255,.54)}
+    .statrow{
+      margin: 12px auto 0;
+      width: min(1040px, 100%);
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.72);
+      font-size:12px;
+      user-select:none;
+    }
+    .chip b{color: rgba(255,255,255,.92)}
+    .chip i{font-style:normal;color: rgba(34,211,238,.95)}
+    .quicklinks{margin: 10px auto 0;width: min(1040px, 100%);display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .quicklinks a{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.74);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .quicklinks a:hover{transform: translateY(-1px); border-color: rgba(52,211,153,.22); background: rgba(255,255,255,.10)}
+    .quick-tools{
+      margin: 12px auto 0;
+      width: min(1040px, 100%);
+      display:grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap:10px;
+    }
+    .quick-tool{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: 16px;
+      padding: 10px 10px 12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height: 74px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+    }
+    .quick-tool:hover{transform: translateY(-2px); border-color: rgba(34,211,238,.22); box-shadow: 0 18px 36px rgba(0,0,0,.50)}
+    .qt-ico{
+      width: 34px; height: 34px;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(167,139,250,.12));
+      color: rgba(255,255,255,.92);
+      overflow:hidden;
+    }
+    .qt-name{font-size:12px; color: rgba(255,255,255,.84); text-align:center; line-height:1.2}
+
+    .panel{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .panel.pad{padding:14px}
+    .anchor{scroll-margin-top: 92px}
+
+    .recommend{margin-top: 12px;border-radius: 22px;overflow:hidden}
+    .recommend-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .recommend-title{font-weight:980}
+    .segrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .seg{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.80);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .seg.active{border-color: rgba(34,211,238,.30); background: rgba(34,211,238,.14); color: rgba(255,255,255,.92)}
+    .recommend-body{padding: 12px}
+    .recommend-desc{margin:0;color: rgba(255,255,255,.70);font-size:12.5px}
+    .recommend-hint{margin:8px 0 0;color: rgba(255,255,255,.56);font-size:12px}
+    .rec-grid{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:10px;
+    }
+    .rec-card{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 10px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      min-height: 64px;
+    }
+    .rec-card:hover{transform: translateY(-1px); border-color: rgba(167,139,250,.24); background: rgba(0,0,0,.28)}
+    .rec-icon{
+      width: 40px;height:40px;border-radius: 16px;
+      display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(167,139,250,.12));
+      color: rgba(255,255,255,.92);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .rec-icon img{width: 20px;height: 20px;object-fit:contain;filter: saturate(1.1);opacity:.96}
+    .rec-text{display:flex;flex-direction:column;min-width:0}
+    .rec-name{font-weight:880; font-size:13px}
+    .rec-sub{color: rgba(255,255,255,.62); font-size:12px; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+    .section-title{margin:0;font-size:16px;font-weight:980}
+    .section-sub{margin:6px 0 0;color: rgba(255,255,255,.64);font-size:12.5px}
+
+    .tabs{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .tab{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.82);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .tab:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.22); background: rgba(255,255,255,.10)}
+    .tab.active{border-color: rgba(34,211,238,.30); background: rgba(34,211,238,.14); color: rgba(255,255,255,.92)}
+
+    .cat-quick{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap:10px;
+    }
+    .cat-btn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      color: rgba(255,255,255,.86);
+      border-radius: 16px;
+      padding: 10px 10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      min-height: 62px;
+    }
+    .cat-btn:hover{transform: translateY(-1px); border-color: rgba(167,139,250,.24); background: rgba(0,0,0,.28)}
+    .cat-btn.active{border-color: rgba(34,211,238,.30); background: rgba(34,211,238,.12)}
+    .cat-ico{
+      width: 38px;height:38px;border-radius: 16px;
+      display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(167,139,250,.12));
+      color: rgba(255,255,255,.92);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .cat-name{font-weight:900}
+
+    .grid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      border-radius: 18px;
+      padding: 12px 12px;
+      box-shadow: 0 18px 44px rgba(0,0,0,.46);
+    }
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .card-title{margin:0;font-weight:980;font-size:14.5px}
+    .card-desc{margin:6px 0 0;color: rgba(255,255,255,.62);font-size:12.5px;line-height:1.6}
+    .star{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      border-radius: 14px;
+      width: 38px;height: 38px;
+      display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      flex: 0 0 auto;
+    }
+    .star:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.22); background: rgba(255,255,255,.10)}
+    .tags{margin-top: 10px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{
+      font-size:12px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.72);
+    }
+    .card-actions{margin-top: 10px;display:flex;gap:10px;flex-wrap:wrap}
+    .mini{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+      border-radius:999px;
+      padding:8px 10px;
+      font-size:12.5px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .mini:hover{transform: translateY(-1px); border-color: rgba(167,139,250,.24); background: rgba(255,255,255,.10)}
+    .mini.primary{
+      background: linear-gradient(135deg, rgba(34,211,238,1), rgba(167,139,250,.95));
+      border-color: rgba(34,211,238,.26);
+      color:#071018;
+      font-weight: 900;
+    }
+
+    .inline-ad{grid-column:1 / -1}
+    .ad-slot{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(760px 320px at 10% 10%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(680px 320px at 90% 30%, rgba(167,139,250,.16), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(0,0,0,.24));
+      padding: 14px 14px;
+    }
+    .ad-title{font-weight: 980}
+    .ad-desc{margin-top:8px;color: rgba(255,255,255,.68);font-size:12.5px;line-height:1.7}
+    .badge{
+      font-size:12px;
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.78);
+      user-select:none;
+    }
+
+    .tmpl-grid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .tmpl-card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      border-radius: 18px;
+      padding: 12px 12px;
+      box-shadow: 0 18px 44px rgba(0,0,0,.46);
+    }
+    .tmpl-title{margin:0;font-size:14.5px;font-weight:980}
+    .tmpl-desc{margin:6px 0 0;color: rgba(255,255,255,.64);font-size:12.5px;line-height:1.7}
+    .tmpl-actions{margin-top: 10px;display:flex;gap:10px;flex-wrap:wrap}
+
+    .footer{
+      margin: 14px 0 0;
+      padding: 14px 0 40px;
+      color: rgba(255,255,255,.56);
+      font-size: 12px;
+      text-align:center;
+    }
+    .footer a{color: rgba(255,255,255,.78)}
+
+    .float-cta{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index: 60;
+    }
+    .fab{
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.30);
+      color: rgba(255,255,255,.92);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      cursor:pointer;
+      user-select:none;
+      box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      text-align:center;
+    }
+    .fab:hover{transform: translateY(-1px); border-color: rgba(34,211,238,.24); background: rgba(0,0,0,.38)}
+    .fab.secondary{background: rgba(255,255,255,.06)}
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events:none;
+      background: rgba(0,0,0,.60);
+      border:1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      border-radius: 12px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.70);
+      transition: transform .18s ease, opacity .18s ease;
+      font-size: 12.5px;
+      max-width: min(720px, calc(100vw - 28px));
+      text-align:center;
+    }
+    .toast.show{opacity: 1; transform: translateX(-50%) translateY(0px)}
+
+    @media (max-width: 980px){
+      .brand{min-width: 210px}
+      .grid{grid-template-columns: repeat(2, minmax(0, 1fr))}
+      .tmpl-grid{grid-template-columns: repeat(2, minmax(0, 1fr))}
+      .rec-grid{grid-template-columns: repeat(2, minmax(0, 1fr))}
+      .quick-tools{grid-template-columns: repeat(4, minmax(0, 1fr))}
+      .cat-quick{grid-template-columns: repeat(2, minmax(0, 1fr))}
+    }
+    @media (max-width: 560px){
+      .topbar-inner{padding: 10px 12px}
+      .brand{min-width: 0}
+      .nav{display:none}
+      .grid{grid-template-columns: 1fr}
+      .tmpl-grid{grid-template-columns: 1fr}
+      .rec-grid{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-text">
+          <div class="brand-title">电商带货增长台</div>
+          <div class="brand-sub">投放素材 · 脚本模板 · 创意矩阵 · 数据与选品入口</div>
+        </div>
+      </div>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#ec2-stack" data-event="ec2_nav_stack">工具栈</a>
+        <a href="#ec2-templates" data-event="ec2_nav_templates">脚本模板</a>
+        <a href="#ec2-playbook" data-event="ec2_nav_playbook">增长清单</a>
+        <a href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_nav_1bgp">部署推荐</a>
+      </nav>
+      <div class="actions">
+        <button class="btn ghost" id="showFavs2" type="button" data-event="ec2_nav_favs">只看收藏</button>
+        <button class="btn primary" id="submitTool2" type="button" data-event="ec2_nav_host">部署选型</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">用“模板 + 矩阵 + 指标”做增长</h1>
+        <p class="hero-sub">把选品、卖点、详情页与投放素材拆成可复用模块：3秒钩子、证据链、镜头拆解、AB变量与复盘表。</p>
+        <div class="searchbar" role="search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input id="q2" type="search" placeholder="搜索：千川 / 脚本 / 详情页 / 选品 / 素材 / 指数 ..." autocomplete="off" />
+        </div>
+        <div class="statrow" aria-label="统计信息">
+          <span class="chip"><b id="count2">0</b> 个结果</span>
+          <span class="chip">当前分类：<b id="activeCat2">全部</b></span>
+          <span class="chip">分类 <b id="catCount2">0</b> / 工具 <b id="toolCount2">0</b></span>
+          <span class="chip">已收藏 <b id="favCount2">0</b> <i>★</i></span>
+        </div>
+        <div class="quicklinks" aria-label="快捷入口">
+          <a href="#ec2-stack" data-event="ec2_hero_stack">去工具栈</a>
+          <a href="#ec2-templates" data-event="ec2_hero_templates">脚本模板</a>
+          <a href="#ec2-playbook" data-event="ec2_hero_playbook">增长清单</a>
+          <a href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_hero_1bgp">1bgp 服务器</a>
+        </div>
+        <div class="quick-tools" id="quickTools2" aria-label="快捷筛选"></div>
+      </div>
+    </section>
+
+    <section class="panel recommend" aria-label="推荐与最近">
+      <div class="recommend-head">
+        <div class="recommend-title">常用入口</div>
+        <div class="segrow" role="tablist" aria-label="推荐切换">
+          <button class="seg active" type="button" data-rec="recommend" data-event="ec2_rec_tab_recommend" aria-selected="true">增长高频</button>
+          <button class="seg" type="button" data-rec="recent" data-event="ec2_rec_tab_recent" aria-selected="false">最近打开</button>
+        </div>
+      </div>
+      <div class="recommend-body">
+        <p class="recommend-desc" id="recommendDesc2"></p>
+        <p class="recommend-hint" id="recommendHint2"></p>
+        <div class="rec-grid" id="recommendGrid2" aria-label="推荐列表"></div>
+      </div>
+    </section>
+
+    <section class="panel pad anchor" id="ec2-stack" aria-label="工具栈">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">工具栈（按增长链路）</h2>
+          <p class="section-sub">从平台/投放到素材制作、数据洞察、选品货源与效率工具：先有“链路”，再堆工具。</p>
+        </div>
+        <div class="segrow" style="justify-content:flex-end">
+          <a class="mini" href="#" id="openDisclaimer2" data-event="ec2_open_disclaimer">使用说明</a>
+          <a class="mini" href="#" id="openPrivacy2" data-event="ec2_open_privacy">隐私说明</a>
+        </div>
+      </div>
+      <div class="tabs" id="tabs2" role="tablist" aria-label="分类"></div>
+      <div class="cat-quick" id="catQuick2" aria-label="分类快捷"></div>
+      <div class="grid" id="grid2" aria-label="工具列表"></div>
+    </section>
+
+    <section class="panel pad anchor" id="ec2-templates" aria-label="脚本模板">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">脚本模板库（可直接复制）</h2>
+          <p class="section-sub">聚焦投放素材：3秒钩子、镜头拆解、创意矩阵、标题与合规替换。也包含选品/卖点/详情页模块化模板。</p>
+        </div>
+      </div>
+      <div class="tmpl-grid" id="tmplGrid2" aria-label="模板卡片"></div>
+    </section>
+
+    <section class="panel pad anchor" id="ec2-playbook" aria-label="增长清单">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">增长清单（复用型流程）</h2>
+          <p class="section-sub">用“变量表 + 指标表 + 结论表”持续迭代：让素材胜率不断上升。</p>
+        </div>
+      </div>
+      <div class="tmpl-grid" id="sopGrid2" aria-label="清单卡片"></div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year2"></span> 电商带货增长台 · 纯前端单页</div>
+      <div style="margin-top:6px">提示：投放与文案需遵守平台规则与广告法，避免夸大与绝对化表达。</div>
+    </footer>
+  </main>
+
+  <div class="float-cta">
+    <a class="fab" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_fab_1bgp">打开 1bgp 官网</a>
+    <button class="fab secondary" id="fabTop2" type="button" data-event="ec2_fab_top">回到顶部</button>
+  </div>
+
+  <div class="toast" id="toast2" role="status" aria-live="polite"></div>
+
+  <script>
+    const LS_KEY = "ecomcn2:favs";
+    const REC_KEY = "ecomcn2:recent";
+
+    const tools = [
+      { name: "抖音电商", desc: "抖音电商官方入口（商家/达人/服务）。", url: "https://www.douyinec.com", cat: "平台/投放", tags: ["抖音","电商","官方"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.douyinec.com&v=13" },
+      { name: "抖店后台", desc: "抖音小店商家管理后台入口。", url: "https://fxg.jinritemai.com", cat: "平台/投放", tags: ["小店","后台","订单"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ffxg.jinritemai.com&v=13" },
+      { name: "抖音电商罗盘", desc: "经营数据与分析看板（生意/内容/商品）。", url: "https://compass.jinritemai.com", cat: "数据/竞品", tags: ["罗盘","看板","经营"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fcompass.jinritemai.com&v=13" },
+      { name: "巨量引擎", desc: "投放与营销平台入口（巨量体系）。", url: "https://e.juliangyinqing.com", cat: "平台/投放", tags: ["投放","巨量","账户"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fe.juliangyinqing.com&v=13" },
+      { name: "巨量千川", desc: "电商投放（千川）入口，适合带货推广。", url: "https://qianchuan.oceanengine.com", cat: "平台/投放", tags: ["千川","电商投放","转化"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fqianchuan.oceanengine.com&v=13" },
+      { name: "巨量百应", desc: "达人合作与商家撮合入口（巨量体系）。", url: "https://buyin.jinritemai.com", cat: "平台/投放", tags: ["达人","合作","撮合"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fbuyin.jinritemai.com&v=13" },
+      { name: "巨量创意", desc: "创意灵感与素材参考（巨量体系）。", url: "https://cc.oceanengine.com", cat: "素材/制作", tags: ["灵感","素材","参考"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fcc.oceanengine.com&v=13" },
+      { name: "巨量算数", desc: "内容趋势与热点洞察（巨量体系）。", url: "https://trendinsight.oceanengine.com", cat: "数据/竞品", tags: ["趋势","热点","洞察"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ftrendinsight.oceanengine.com&v=13" },
+      { name: "巨量云图", desc: "人群与兴趣洞察、策略辅助。", url: "https://yuntu.oceanengine.com", cat: "数据/竞品", tags: ["人群","洞察","策略"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fyuntu.oceanengine.com&v=13" },
+      { name: "快手磁力引擎", desc: "快手投放平台入口（国内）。", url: "https://e.kuaishou.com", cat: "平台/投放", tags: ["快手","投放","磁力"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fe.kuaishou.com&v=13" },
+      { name: "磁力金牛", desc: "快手电商与投放相关入口（磁力体系）。", url: "https://jinniu.e.kuaishou.com", cat: "平台/投放", tags: ["快手","电商","金牛"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fjinniu.e.kuaishou.com&v=13" },
+      { name: "淘宝联盟", desc: "淘宝客/推广入口（选品与推广链接）。", url: "https://pub.alimama.com", cat: "平台/投放", tags: ["淘宝客","推广","联盟"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fpub.alimama.com&v=13" },
+      { name: "京东联盟", desc: "京东推广联盟入口。", url: "https://union.jd.com", cat: "平台/投放", tags: ["京东","联盟","推广"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Funion.jd.com&v=13" },
+      { name: "小红书蒲公英", desc: "小红书品牌合作平台（达人投放）。", url: "https://pgy.xiaohongshu.com", cat: "平台/投放", tags: ["小红书","达人","投放"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fpgy.xiaohongshu.com&v=13" },
+      { name: "小红书商家平台", desc: "小红书商家运营入口（店铺/商品）。", url: "https://ark.xiaohongshu.com", cat: "平台/投放", tags: ["小红书","店铺","运营"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fark.xiaohongshu.com&v=13" },
+
+      { name: "1688", desc: "国内供应链与货源平台，适合找源头工厂与比价。", url: "https://www.1688.com", cat: "选品/货源", tags: ["货源","工厂","比价"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.1688.com&v=13" },
+      { name: "淘特", desc: "低价货源与价格带观察入口。", url: "https://www.taote.com", cat: "选品/货源", tags: ["低价","价格带","供给"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.taote.com&v=13" },
+      { name: "义乌购", desc: "小商品批发与货源参考。", url: "https://www.yiwugo.com", cat: "选品/货源", tags: ["批发","小商品","货源"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.yiwugo.com&v=13" },
+      { name: "淘宝", desc: "竞品参考与价格带观察。", url: "https://www.taobao.com", cat: "选品/货源", tags: ["竞品","价格带","评论"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.taobao.com&v=13" },
+      { name: "京东", desc: "竞品参考（评价、参数、服务承诺）。", url: "https://www.jd.com", cat: "选品/货源", tags: ["竞品","评价","参数"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.jd.com&v=13" },
+      { name: "拼多多", desc: "价格带与爆款观察（不同人群侧重点）。", url: "https://www.pinduoduo.com", cat: "选品/货源", tags: ["价格","爆款","人群"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.pinduoduo.com&v=13" },
+      { name: "多多批发", desc: "批发/供给侧信息参考。", url: "https://pf.pinduoduo.com", cat: "选品/货源", tags: ["批发","供给","对标"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fpf.pinduoduo.com&v=13" },
+
+      { name: "蝉妈妈", desc: "带货数据与直播短视频分析（第三方）。", url: "https://www.chanmama.com", cat: "数据/竞品", tags: ["数据","带货","分析"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.chanmama.com&v=13" },
+      { name: "飞瓜数据", desc: "短视频/直播/电商数据分析（第三方）。", url: "https://www.feigua.cn", cat: "数据/竞品", tags: ["数据","直播","短视频"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.feigua.cn&v=13" },
+      { name: "抖音热点宝", desc: "热点与话题趋势参考（入口可能随时调整）。", url: "https://douhot.douyin.com", cat: "数据/竞品", tags: ["热点","话题","趋势"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fdouhot.douyin.com&v=13" },
+      { name: "微信指数", desc: "关键词热度观察（趋势参考）。", url: "https://index.weixin.qq.com", cat: "数据/竞品", tags: ["热度","关键词","趋势"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Findex.weixin.qq.com&v=13" },
+      { name: "百度指数", desc: "关键词热度与趋势参考。", url: "https://index.baidu.com", cat: "数据/竞品", tags: ["热度","趋势","关键词"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Findex.baidu.com&v=13" },
+
+      { name: "剪映专业版", desc: "短视频剪辑与模板，适合批量产出素材。", url: "https://www.capcut.cn", cat: "素材/制作", tags: ["剪辑","短视频","模板"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.capcut.cn&v=13" },
+      { name: "CapCut剪映", desc: "剪映入口（同类工具的备用入口）。", url: "https://www.capcut.com", cat: "素材/制作", tags: ["剪辑","海外入口","备用"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.capcut.com&v=13" },
+      { name: "Canva", desc: "投放素材模板化设计，适合多尺寸批量出图。", url: "https://www.canva.com", cat: "素材/制作", tags: ["模板","出图","多尺寸"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.canva.com&v=13" },
+      { name: "稿定设计", desc: "电商图文、海报与详情页素材模板。", url: "https://www.gaoding.com", cat: "素材/制作", tags: ["电商","模板","海报"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.gaoding.com&v=13" },
+      { name: "创客贴", desc: "海报/图文模板，快速做投放图。", url: "https://www.chuangkit.com", cat: "素材/制作", tags: ["海报","模板","图文"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.chuangkit.com&v=13" },
+      { name: "Remove.bg", desc: "一键去背景抠图，适合商品图处理。", url: "https://www.remove.bg", cat: "素材/制作", tags: ["抠图","去背景","快"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.remove.bg&v=13" },
+      { name: "TinyPNG", desc: "图片压缩工具，适合投放素材减体积。", url: "https://tinypng.com", cat: "素材/制作", tags: ["压缩","发布","体积"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ftinypng.com&v=13" },
+      { name: "Photopea", desc: "在线PS替代，适合快速修图。", url: "https://www.photopea.com", cat: "素材/制作", tags: ["在线PS","修图","模板"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.photopea.com&v=13" },
+
+      { name: "DeepSeek", desc: "推理与结构化能力强，适合拆解人群与竞品。", url: "https://chat.deepseek.com", cat: "AI/文案", tags: ["推理","拆解","结构"], icon: "https://www.aig123.com/wp-content/uploads/2024/05/deepseek.png" },
+      { name: "Kimi", desc: "长文阅读与总结，适合竞品评价/用户痛点归纳。", url: "https://kimi.moonshot.cn", cat: "AI/文案", tags: ["长文","总结","中文"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fkimi.moonshot.cn&v=13" },
+      { name: "豆包", desc: "日常文案生成与改写入口。", url: "https://www.doubao.com", cat: "AI/文案", tags: ["中文","改写","文案"], icon: "https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/web/static/image/OnboardingAvatar.bb1504ee.webp" },
+      { name: "通义千问", desc: "通用对话与创作助手，适合结构化写作。", url: "https://tongyi.aliyun.com", cat: "AI/文案", tags: ["中文","结构化","写作"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Ftongyi.aliyun.com&v=13" },
+      { name: "文心一言", desc: "中文写作与问答入口。", url: "https://yiyan.baidu.com", cat: "AI/文案", tags: ["中文","写作","问答"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fyiyan.baidu.com&v=13" },
+      { name: "ChatGPT", desc: "卖点提炼、标题改写、脚本与结构化输出。", url: "https://chat.openai.com", cat: "AI/文案", tags: ["卖点","脚本","结构"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fchat.openai.com&v=13" },
+
+      { name: "飞书表格", desc: "投放与素材台账：命名规范、版本与指标。", url: "https://www.feishu.cn/product/sheets", cat: "运营/效率", tags: ["台账","协作","看板"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwww.feishu.cn&v=13" },
+      { name: "金数据", desc: "表单收集：投放需求、素材需求与回收。", url: "https://jinshuju.net", cat: "运营/效率", tags: ["表单","收集","协作"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fjinshuju.net&v=13" },
+      { name: "腾讯问卷", desc: "问卷/调研，适合人群画像与需求验证。", url: "https://wj.qq.com", cat: "运营/效率", tags: ["调研","问卷","用户"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fwj.qq.com&v=13" },
+      { name: "石墨文档", desc: "脚本共创与版本管理（轻量协作）。", url: "https://shimo.im", cat: "运营/效率", tags: ["协作","文档","版本"], icon: "https://www.iliudar.com/api/icon?url=https%3A%2F%2Fshimo.im&v=13" }
+    ];
+
+    const quickTools = [
+      { name: "找爆款", q: "爆款 价格带 人群", cat: "数据/竞品" },
+      { name: "开投放", q: "千川 账户 素材", cat: "平台/投放" },
+      { name: "拆脚本", q: "脚本 镜头 口播", cat: "AI/文案" },
+      { name: "写标题", q: "标题 关键词 合规", cat: "AI/文案" },
+      { name: "做图", q: "海报 图文 模板", cat: "素材/制作" },
+      { name: "剪视频", q: "剪辑 模板 口播", cat: "素材/制作" },
+      { name: "看货源", q: "货源 工厂 比价", cat: "选品/货源" },
+      { name: "做台账", q: "台账 指标 复盘", cat: "运营/效率" }
+    ];
+
+    const templateCards = [
+      {
+        title: "投放素材脚本（3秒钩子+证据）",
+        tags: ["投放","脚本","镜头"],
+        desc: "用固定结构写脚本：钩子→放大痛点→解决→证据→利益→CTA。",
+        text: `你是短视频投放编导。请为产品“<<<产品>>>”输出投放脚本（适配<<<平台>>>）：\n1) 3秒钩子：至少5条（不同角度：痛点/对比/反常识/场景/省钱）\n2) 15秒口播稿（1版）+ 30秒口播稿（1版）\n3) 镜头拆解：每镜头包含画面/字幕/时长/节奏/道具\n4) 证据清单：参数、对比、评价、场景证明怎么呈现\n约束：人群<<<画像>>>；价格<<<价位>>>；禁用词<<<列出>>>`
+      },
+      {
+        title: "创意矩阵（AB变量表）",
+        tags: ["矩阵","AB","测试"],
+        desc: "一次生成12条创意方向：人群×场景×表达，只改一个变量。",
+        text: `请为产品“<<<产品>>>”生成创意矩阵至少12条。\n维度：人群（3类）× 场景（2类）× 表达（2类：强利益/强证据）。\n每条输出：标题（<=12字）/主张句（1句）/证据点（1条）/画面建议（1条）/CTA（1条）。\n并给出命名规则：产品-人群-场景-表达-版本号。`
+      },
+      {
+        title: "卖点提炼（利益点+证据链）",
+        tags: ["卖点","证据","结构"],
+        desc: "把卖点写成“能被证明”的表达，避免空话。",
+        text: `请把以下产品信息提炼为卖点卡片（8张）：\n- 卖点标题（<=10字）\n- 利益点（1句）\n- 证据（参数/对比/场景/评价/资质）\n- 适用人群/不适用人群\n- 合规风险提示（如功效/绝对化）\n产品信息：<<<粘贴>>>`
+      },
+      {
+        title: "详情页结构（模块化上架）",
+        tags: ["详情页","结构","转化"],
+        desc: "首屏一句话 + 痛点→解决→证据→保障，按模块产出文案。",
+        text: `请为“<<<品类>>>”生成详情页模块结构，并给每个模块示例文案：\n1) 首屏：人群+痛点+解决方案（1句）+ 3个卖点点列\n2) 痛点放大：3条（禁止夸大）\n3) 解决方案：对应该品类的机制/原理/结构说明\n4) 证据区：参数/对比/评价/资质怎么写\n5) 使用方法与场景：3条\n6) 保障与售后：3条\n7) FAQ：8条\n限制：使用合规表达，避免绝对化。`
+      },
+      {
+        title: "标题与关键词（合规替换）",
+        tags: ["标题","关键词","合规"],
+        desc: "10条标题 + 20个关键词 + 风险词替换建议。",
+        text: `请为产品“<<<产品名>>>”生成：\n- 标题10条（卖点前置/人群前置/场景前置/对比式）\n- 关键词20个（按：人群/场景/属性/规格/痛点 分类）\n- 风险词替换表（至少10组：绝对化/功效夸大/诱导词）\n产品信息：<<<卖点/规格/价位/人群>>>`
+      },
+      {
+        title: "投放复盘（指标→归因→下一轮）",
+        tags: ["复盘","指标","沉淀"],
+        desc: "把每轮投放沉淀为可复用规则与实验计划。",
+        text: `你是投放增长负责人。请给出一份投放复盘模板，包含：\n1) 指标：曝光/点击/CTR/转化/CVR/ROI/客单/退款\n2) 归因：人群/素材/落地页/价格/时段/频控\n3) 结论：胜者素材特征（3条）+ 败者原因（3条）\n4) 下一轮实验：变量、假设、预期指标、停止条件\n5) 产物：素材命名规范 + 台账字段（最少15列）`
+      }
+    ];
+
+    const playbookCards = [
+      {
+        title: "选品快筛（30分钟）",
+        tags: ["选品","快筛","风控"],
+        desc: "先筛再深挖：价格带、竞争强度、合规风险与供应链。",
+        text: `步骤：\n1) 明确人群与场景\n2) 价格带与毛利（含退货空间）\n3) 竞品TOP3：差评/中评挖痛点\n4) 供应链：交期/售后/稳定性\n5) 合规：敏感词与承诺边界\n输出：是否上架 + 目标卖点方向 + 素材角度。`
+      },
+      {
+        title: "素材生产线（命名+版本）",
+        tags: ["素材","批量","规范"],
+        desc: "用命名与版本管理让素材可复用、可回溯。",
+        text: `步骤：\n1) 先做创意矩阵（12条）\n2) 定命名：产品-人群-场景-表达-版本\n3) 每条只改1个变量（钩子/画面/证据/CTA）\n4) 台账记录：上线时间、素材链接、指标\n5) 每日淘汰，周复盘放大\n输出：命名规范 + 台账字段。`
+      },
+      {
+        title: "落地页/详情页对齐投放",
+        tags: ["详情页","一致性","转化"],
+        desc: "素材承诺要在详情页能兑现：证据一致，减少跳失。",
+        text: `步骤：\n1) 素材主张（1句）\n2) 详情页首屏同步主张\n3) 证据区补齐：参数/对比/评价/资质\n4) FAQ覆盖疑虑：退货/使用/适配\n5) 结尾CTA与权益统一\n输出：一致性检查清单（至少12项）。`
+      },
+      {
+        title: "合规检查清单（上线前）",
+        tags: ["合规","广告法","审核"],
+        desc: "避免“绝对化/最/第一/治愈”等风险表达。",
+        text: `上线前检查：\n1) 是否出现绝对化词（最/第一/永久/100%）\n2) 是否出现功效承诺与医疗暗示\n3) 是否出现诱导性承诺（必瘦/必白/必赚）\n4) 是否有证据支撑（参数/资质/对比）\n5) 是否符合平台规则（敏感品类、禁词）\n输出：风险词替换建议与对应证据补齐方案。`
+      }
+    ];
+
+    const state = { activeCat: "全部", q: "", favOnly: false, favs: new Set() };
+    const els = {
+      q: document.getElementById("q2"),
+      recommendGrid: document.getElementById("recommendGrid2"),
+      recommendDesc: document.getElementById("recommendDesc2"),
+      recommendHint: document.getElementById("recommendHint2"),
+      tabs: document.getElementById("tabs2"),
+      catQuick: document.getElementById("catQuick2"),
+      grid: document.getElementById("grid2"),
+      tmplGrid: document.getElementById("tmplGrid2"),
+      sopGrid: document.getElementById("sopGrid2"),
+      activeCat: document.getElementById("activeCat2"),
+      count: document.getElementById("count2"),
+      catCount: document.getElementById("catCount2"),
+      toolCount: document.getElementById("toolCount2"),
+      favCount: document.getElementById("favCount2"),
+      showFavs: document.getElementById("showFavs2"),
+      year: document.getElementById("year2"),
+      toast: document.getElementById("toast2"),
+      fabTop: document.getElementById("fabTop2"),
+      submitTool: document.getElementById("submitTool2"),
+      openDisclaimer: document.getElementById("openDisclaimer2"),
+      openPrivacy: document.getElementById("openPrivacy2"),
+      quickTools: document.getElementById("quickTools2")
+    };
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function normalize(s){return (s || "").toLowerCase().trim();}
+    function toast(msg){
+      els.toast.textContent = msg;
+      els.toast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => els.toast.classList.remove("show"), 1700);
+    }
+    function track(node){
+      const ev = node?.dataset?.event;
+      if(!ev) return;
+      window.__events = window.__events || [];
+      window.__events.push({ event: ev, ts: Date.now() });
+    }
+    function getCategories(items){
+      const set = new Set(items.map(x => x.cat));
+      return ["全部", ...Array.from(set).sort((a,b)=>a.localeCompare(b,"zh-Hans-CN"))];
+    }
+    function matchesQuery(item, q){
+      if(!q) return true;
+      const hay = [item.name, item.desc, item.cat, ...(item.tags || [])].join(" ").toLowerCase();
+      return hay.includes(q);
+    }
+    function shouldShow(item){
+      if(state.activeCat !== "全部" && item.cat !== state.activeCat) return false;
+      if(state.favOnly && !state.favs.has(item.name)) return false;
+      if(!matchesQuery(item, state.q)) return false;
+      return true;
+    }
+
+    function saveFavs(){
+      localStorage.setItem(LS_KEY, JSON.stringify(Array.from(state.favs)));
+      updateCounts();
+    }
+    function loadFavs(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return;
+        const arr = JSON.parse(raw);
+        if(Array.isArray(arr)) state.favs = new Set(arr);
+      }catch(_){}
+    }
+    function loadRecents(){
+      try{
+        const raw = localStorage.getItem(REC_KEY);
+        if(!raw) return [];
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr.filter(Boolean) : [];
+      }catch(_){return [];}
+    }
+    function saveRecents(list){
+      try{localStorage.setItem(REC_KEY, JSON.stringify(list.slice(0, 12)))}catch(_){}
+    }
+    function pushRecent(name){
+      if(!name) return;
+      const list = loadRecents();
+      const next = [name, ...list.filter(x => x !== name)].slice(0, 12);
+      saveRecents(next);
+    }
+
+    function iconSvg(cat){
+      const common = {
+        "平台/投放": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4H4V7Z" stroke="currentColor" stroke-width="2"/><path d="M4 11h16v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6Z" stroke="currentColor" stroke-width="2"/></svg>`,
+        "选品/货源": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7h10v10H7V7Z" stroke="currentColor" stroke-width="2"/><path d="M4 10h3m10 0h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "数据/竞品": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 20V10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 20V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 20v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 20v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "素材/制作": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z" stroke="currentColor" stroke-width="2"/><path d="M8 14l2-2 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        "AI/文案": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/><path d="M9 8h8M9 12h8M9 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+        "运营/效率": `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h12v18H6V3Z" stroke="currentColor" stroke-width="2"/><path d="M9 7h6M9 11h6M9 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`
+      };
+      return common[cat] || `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" stroke="currentColor" stroke-width="2"/><path d="M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+    }
+
+    function toolIconSvg(name){
+      const map = {
+        "抖音电商": iconSvg("平台/投放"),
+        "抖店后台": iconSvg("平台/投放"),
+        "抖音电商罗盘": iconSvg("数据/竞品"),
+        "巨量引擎": iconSvg("平台/投放"),
+        "巨量千川": iconSvg("平台/投放"),
+        "巨量百应": iconSvg("平台/投放"),
+        "巨量创意": iconSvg("素材/制作"),
+        "巨量算数": iconSvg("数据/竞品"),
+        "巨量云图": iconSvg("数据/竞品"),
+        "快手磁力引擎": iconSvg("平台/投放"),
+        "磁力金牛": iconSvg("平台/投放"),
+        "淘宝联盟": iconSvg("平台/投放"),
+        "京东联盟": iconSvg("平台/投放"),
+        "小红书蒲公英": iconSvg("平台/投放"),
+        "小红书商家平台": iconSvg("平台/投放"),
+        "1688": iconSvg("选品/货源"),
+        "淘特": iconSvg("选品/货源"),
+        "义乌购": iconSvg("选品/货源"),
+        "淘宝": iconSvg("选品/货源"),
+        "京东": iconSvg("选品/货源"),
+        "拼多多": iconSvg("选品/货源"),
+        "多多批发": iconSvg("选品/货源"),
+        "蝉妈妈": iconSvg("数据/竞品"),
+        "飞瓜数据": iconSvg("数据/竞品"),
+        "抖音热点宝": iconSvg("数据/竞品"),
+        "微信指数": iconSvg("数据/竞品"),
+        "百度指数": iconSvg("数据/竞品"),
+        "剪映专业版": iconSvg("素材/制作"),
+        "CapCut剪映": iconSvg("素材/制作"),
+        "Canva": iconSvg("素材/制作"),
+        "稿定设计": iconSvg("素材/制作"),
+        "创客贴": iconSvg("素材/制作"),
+        "Remove.bg": iconSvg("素材/制作"),
+        "TinyPNG": iconSvg("素材/制作"),
+        "Photopea": iconSvg("素材/制作"),
+        "DeepSeek": iconSvg("AI/文案"),
+        "Kimi": iconSvg("AI/文案"),
+        "豆包": iconSvg("AI/文案"),
+        "通义千问": iconSvg("AI/文案"),
+        "文心一言": iconSvg("AI/文案"),
+        "ChatGPT": iconSvg("AI/文案"),
+        "飞书表格": iconSvg("运营/效率"),
+        "金数据": iconSvg("运营/效率"),
+        "腾讯问卷": iconSvg("运营/效率"),
+        "石墨文档": iconSvg("运营/效率")
+      };
+      return map[name] || iconSvg("AI/文案");
+    }
+
+    function toolIconHtml(tool){
+      if(tool?.icon){
+        return `<img src="${escapeHtml(tool.icon)}" alt="${escapeHtml(tool.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-icon-name="${escapeHtml(tool.name)}" />`;
+      }
+      return toolIconSvg(tool?.name || "");
+    }
+
+    function attachIconFallback(root){
+      if(!root) return;
+      root.querySelectorAll('img[data-icon-name]').forEach(img => {
+        img.addEventListener("error", () => {
+          const name = img.getAttribute("data-icon-name") || "";
+          const wrap = img.parentElement;
+          if(!wrap) return;
+          wrap.innerHTML = toolIconSvg(name);
+        }, { once: true });
+      });
+    }
+
+    function updateCounts(filtered){
+      const categories = getCategories(tools);
+      els.catCount.textContent = String(Math.max(0, categories.length - 1));
+      els.toolCount.textContent = String(tools.length);
+      els.favCount.textContent = String(state.favs.size);
+      if(typeof filtered === "number") els.count.textContent = String(filtered);
+      els.activeCat.textContent = state.activeCat;
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("已复制");
+      }catch(_){
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("已复制");
+      }
+    }
+
+    function renderCards(list, root, evPrefix){
+      if(!root) return;
+      root.innerHTML = list.map((x) => `
+        <article class="tmpl-card">
+          <h3 class="tmpl-title">${escapeHtml(x.title)}</h3>
+          <p class="tmpl-desc">${escapeHtml(x.desc)}</p>
+          <div class="tags">
+            ${(x.tags || []).slice(0,4).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+          <div class="tmpl-actions">
+            <button class="mini primary" type="button" data-copy="${escapeHtml(x.text)}" data-event="${evPrefix}_copy">复制模板</button>
+            <button class="mini" type="button" data-fill="${escapeHtml(x.title)}" data-event="${evPrefix}_use">用于搜索</button>
+          </div>
+        </article>
+      `).join("");
+      root.querySelectorAll("[data-copy]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const text = e.currentTarget.getAttribute("data-copy") || "";
+          copyText(text);
+        });
+      });
+      root.querySelectorAll("[data-fill]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const q = e.currentTarget.getAttribute("data-fill") || "";
+          els.q.value = q;
+          state.q = normalize(q);
+          renderGrid();
+          toast("已填入搜索框");
+        });
+      });
+    }
+
+    function renderQuickTools(){
+      if(!els.quickTools) return;
+      els.quickTools.innerHTML = quickTools.map(x => `
+        <button class="quick-tool" type="button" data-qt="1" data-cat="${escapeHtml(x.cat)}" data-q="${escapeHtml(x.q)}" data-event="ec2_quick_${escapeHtml(x.name)}" aria-label="${escapeHtml(x.name)}">
+          <span class="qt-ico">${iconSvg(x.cat)}</span>
+          <span class="qt-name">${escapeHtml(x.name)}</span>
+        </button>
+      `).join("");
+      els.quickTools.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-qt]");
+        if(!btn) return;
+        track(btn);
+        const cat = btn.getAttribute("data-cat") || "";
+        const q = btn.getAttribute("data-q") || "";
+        if(cat) state.activeCat = cat;
+        if(typeof q === "string") { state.q = normalize(q); els.q.value = q; }
+        renderTabs();
+        renderCatQuick();
+        renderGrid();
+        toast("已应用快捷筛选");
+      });
+    }
+
+    function renderTabs(){
+      const categories = getCategories(tools);
+      els.tabs.innerHTML = categories.map(cat => {
+        const active = cat === state.activeCat ? "active" : "";
+        return `<button class="tab ${active}" type="button" role="tab" aria-selected="${active ? "true" : "false"}" data-cat="${escapeHtml(cat)}" data-event="ec2_tab_${escapeHtml(cat)}">${escapeHtml(cat)}</button>`;
+      }).join("");
+    }
+
+    function renderCatQuick(){
+      if(!els.catQuick) return;
+      const categories = getCategories(tools).filter(x => x !== "全部");
+      const list = categories.slice(0, 16);
+      els.catQuick.innerHTML = list.map(cat => {
+        const active = cat === state.activeCat ? "active" : "";
+        return `
+          <button class="cat-btn ${active}" type="button" data-cat="${escapeHtml(cat)}" data-event="ec2_cat_${escapeHtml(cat)}" aria-label="${escapeHtml(cat)}">
+            <span class="cat-ico">${iconSvg(cat)}</span>
+            <span class="cat-name">${escapeHtml(cat)}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderRecommend(mode){
+      const prefer = [
+        "巨量千川","巨量引擎","巨量创意","抖音电商","抖店后台",
+        "抖音电商罗盘","蝉妈妈","飞瓜数据",
+        "剪映专业版","Canva","稿定设计",
+        "DeepSeek","Kimi","ChatGPT"
+      ];
+      let list = [];
+      if(mode === "recent"){
+        const recentNames = loadRecents();
+        list = recentNames.map(n => tools.find(t => t.name === n)).filter(Boolean);
+        els.recommendDesc.textContent = "你最近点过的入口（仅保存在本地，不上传）。";
+        els.recommendHint.textContent = list.length ? "" : "暂无最近使用记录。点击下方工具后，这里会自动出现。";
+      }else{
+        const picked = [];
+        for(const n of prefer){
+          const t = tools.find(x => x.name === n);
+          if(t) picked.push(t);
+        }
+        for(const t of tools){
+          if(!picked.some(x => x.name === t.name)) picked.push(t);
+        }
+        list = picked.slice(0, 12);
+        els.recommendDesc.textContent = "增长高频入口（置顶）。更多工具在下方按链路分类。";
+        els.recommendHint.textContent = "";
+      }
+      els.recommendGrid.innerHTML = list.map(t => `
+        <a class="rec-card" href="${escapeHtml(t.url)}" target="_blank" rel="noopener noreferrer" data-event="ec2_rec_open_${escapeHtml(t.name)}" data-tool="${escapeHtml(t.name)}" aria-label="${escapeHtml(t.name)}">
+          <span class="rec-icon">${toolIconHtml(t)}</span>
+          <span class="rec-text">
+            <span class="rec-name">${escapeHtml(t.name)}</span>
+            <span class="rec-sub">${escapeHtml(t.desc || "")}</span>
+          </span>
+        </a>
+      `).join("");
+      attachIconFallback(els.recommendGrid);
+      els.recommendGrid.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const name = e.currentTarget.getAttribute("data-tool") || "";
+          pushRecent(name);
+        });
+      });
+    }
+
+    function renderInlineAd(){
+      return `
+        <div class="inline-ad">
+          <div class="ad-slot" role="region" aria-label="信息流推荐">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div class="ad-title">信息流推荐：1bgp.com 服务器</div>
+              <span class="badge">合作</span>
+            </div>
+            <div class="ad-desc">适合部署素材管理、投放台账、自动化脚本与数据面板。云/物理机可选，按需扩容。</div>
+            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+              <a class="mini primary" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_ad_feed_primary">查看配置</a>
+              <a class="mini" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_ad_feed_secondary">进入官网</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGrid(){
+      const list = tools.filter(shouldShow);
+      updateCounts(list.length);
+
+      if(list.length === 0){
+        els.grid.innerHTML = `
+          <div class="card" style="grid-column:1 / -1">
+            <div class="card-title">没有匹配结果</div>
+            <p class="card-desc">尝试更换分类或减少关键词，或取消“只看收藏”。</p>
+            <div class="card-actions">
+              <button class="mini primary" type="button" id="resetFilters2" data-event="ec2_reset_filters">重置筛选</button>
+              <a class="mini" href="https://www.1bgp.com/" target="_blank" rel="noopener noreferrer" data-event="ec2_cta_from_empty">看看部署方案</a>
+            </div>
+          </div>
+        `;
+        document.getElementById("resetFilters2").addEventListener("click", (e) => {
+          track(e.currentTarget);
+          state.activeCat = "全部";
+          state.q = "";
+          state.favOnly = false;
+          els.q.value = "";
+          els.showFavs.textContent = "只看收藏";
+          renderTabs();
+          renderCatQuick();
+          renderGrid();
+          toast("已重置筛选");
+        });
+        return;
+      }
+
+      const nodes = [];
+      const insertAt = Math.min(7, list.length);
+      list.forEach((item, idx) => {
+        if(idx === insertAt) nodes.push(renderInlineAd());
+        const fav = state.favs.has(item.name);
+        nodes.push(`
+          <article class="card" data-name="${escapeHtml(item.name)}" data-cat="${escapeHtml(item.cat)}">
+            <div class="card-head">
+              <div>
+                <h3 class="card-title">${escapeHtml(item.name)}</h3>
+                <p class="card-desc">${escapeHtml(item.desc)}</p>
+              </div>
+              <button class="star" type="button" aria-label="收藏" aria-pressed="${fav ? "true" : "false"}" data-fav="${escapeHtml(item.name)}" data-event="ec2_fav_toggle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 17.3 6.2 20.6l1.1-6.6L2.6 9.7l6.6-1 2.8-6 2.8 6 6.6 1-4.7 4.3 1.1 6.6L12 17.3Z" stroke="currentColor" stroke-width="2" opacity="${fav ? "1" : ".7"}" fill="${fav ? "rgba(34,211,238,.16)" : "transparent"}"/>
+                </svg>
+              </button>
+            </div>
+            <div class="tags">
+              <span class="tag">${escapeHtml(item.cat)}</span>
+              ${(item.tags || []).slice(0,3).map(t => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+            </div>
+            <div class="card-actions">
+              <a class="mini primary" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" data-event="ec2_tool_open" data-tool="${escapeHtml(item.name)}">访问</a>
+              <button class="mini" type="button" data-event="ec2_tool_copy" data-copy="${escapeHtml(item.name)}｜${escapeHtml(item.url)}">复制链接</button>
+            </div>
+          </article>
+        `);
+      });
+      els.grid.innerHTML = nodes.join("");
+
+      els.grid.querySelectorAll("[data-fav]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const name = e.currentTarget.getAttribute("data-fav");
+          if(!name) return;
+          if(state.favs.has(name)) state.favs.delete(name);
+          else state.favs.add(name);
+          saveFavs();
+          renderGrid();
+          toast(state.favs.has(name) ? "已收藏" : "已取消收藏");
+        });
+      });
+
+      els.grid.querySelectorAll("[data-copy]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const text = e.currentTarget.getAttribute("data-copy") || "";
+          copyText(text);
+        });
+      });
+
+      els.grid.querySelectorAll('a[data-event="ec2_tool_open"]').forEach(a => {
+        a.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const name = e.currentTarget.getAttribute("data-tool") || "";
+          pushRecent(name);
+        });
+      });
+
+      els.grid.querySelectorAll('[data-event^="ec2_ad_"]').forEach(a => {
+        a.addEventListener("click", (e) => track(e.currentTarget));
+      });
+    }
+
+    function setActiveCat(cat){
+      state.activeCat = cat;
+      renderTabs();
+      renderCatQuick();
+      renderGrid();
+    }
+
+    function init(){
+      loadFavs();
+      els.year.textContent = String(new Date().getFullYear());
+      renderQuickTools();
+      renderRecommend("recommend");
+      renderTabs();
+      renderCatQuick();
+      renderCards(templateCards, els.tmplGrid, "ec2_tmpl");
+      renderCards(playbookCards, els.sopGrid, "ec2_flow");
+      renderGrid();
+      updateCounts(tools.length);
+
+      const recTabs = document.querySelectorAll("[data-rec]");
+      recTabs.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          track(e.currentTarget);
+          const mode = e.currentTarget.getAttribute("data-rec") || "recommend";
+          recTabs.forEach(x => {
+            const active = x === e.currentTarget;
+            x.classList.toggle("active", active);
+            x.setAttribute("aria-selected", active ? "true" : "false");
+          });
+          renderRecommend(mode);
+        });
+      });
+
+      els.q.addEventListener("input", () => {
+        state.q = normalize(els.q.value);
+        renderGrid();
+      });
+
+      els.tabs.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-cat]");
+        if(!btn) return;
+        track(btn);
+        const cat = btn.getAttribute("data-cat");
+        if(!cat) return;
+        setActiveCat(cat);
+      });
+
+      if(els.catQuick){
+        els.catQuick.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-cat]");
+          if(!btn) return;
+          track(btn);
+          const cat = btn.getAttribute("data-cat");
+          if(!cat) return;
+          setActiveCat(cat);
+        });
+      }
+
+      els.showFavs.addEventListener("click", (e) => {
+        track(e.currentTarget);
+        state.favOnly = !state.favOnly;
+        els.showFavs.textContent = state.favOnly ? "显示全部" : "只看收藏";
+        renderGrid();
+        toast(state.favOnly ? "仅显示收藏" : "显示全部");
+      });
+
+      els.fabTop.addEventListener("click", (e) => {
+        track(e.currentTarget);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      els.submitTool.addEventListener("click", (e) => {
+        track(e.currentTarget);
+        window.open("https://www.1bgp.com/", "_blank", "noopener,noreferrer");
+      });
+
+      els.openDisclaimer.addEventListener("click", (e) => {
+        e.preventDefault();
+        track(e.currentTarget);
+        toast("使用说明：本站整理投放/素材/选品/数据入口与模板，仅供工作流参考；请遵守平台规则与广告法，避免夸大宣传与不实承诺。");
+      });
+
+      els.openPrivacy.addEventListener("click", (e) => {
+        e.preventDefault();
+        track(e.currentTarget);
+        toast("隐私说明：收藏/最近使用仅保存在你的浏览器本地，不会上传。");
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
